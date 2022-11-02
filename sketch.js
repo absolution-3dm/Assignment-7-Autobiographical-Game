@@ -1,4 +1,6 @@
 var Protagonist1;
+var Score;
+var Scene = 1; // scene variable to control different scenes
 
 function setup() {
   createCanvas(600, 400);
@@ -11,56 +13,95 @@ function setup() {
   for(i=0; i<KnowledgeBoxCount; i++){
     // var elements = new KnowledgeBox(random(width),random(height));
     // AllBoxs.push(elements);
-    AllBoxs[i] = new KnowledgeBox(random(width),random(height));
+    AllBoxs[i] = new KnowledgeBox(random(width),random(height), i);
     
   }
-  print(AllBoxs);
+  // print(AllBoxs);
 
-}
-
-// const Scene = 2;
-
-function CollitionDetection(){
-  for(i=0; i<KnowledgeBoxCount; i++){
-    // AllBoxs[i].Show();
-    var distance = dist(AllBoxs[i].x, AllBoxs[i].y, Protagonist1.x, Protagonist1.y);
-    if(distance < 20){
-      AllBoxs.splice(i,1);
-      KnowledgeBoxCount --;
-    }
-    // console.log(distance);
-  }
 }
 
 function draw() {
-  background(200);
+  switch (Scene) {
+    case 1:
+      console.log("case_1");
+      
+      background("pink");
+      
+      Protagonist1.Show(); //show the protagonist graphics. 
+      Protagonist1.Movement(); //listen to key pressed event, updates every frame. 
+      
+      Portal(400,100,Protagonist1);
+
+      break;
+
+    case 2:
+      
+      background(200);
+
+      //show the knowledgeboxes been created
+      for(i=0; i<AllBoxs.length; i++){
+        AllBoxs[i].Show();
+        AllBoxs[i].isOverlap = CollitionDetection(AllBoxs[i], Protagonist1);
+        
+        // if overlap, remove this object
+        if(AllBoxs[i].isOverlap){
+          AllBoxs.splice(i, 1);
+          // change the box count
+          // KnowledgeBoxCount --;
+          // console.log(KnowledgeBoxCount);
+          console.log("box NO." + i + " removed");
+        }
+
+        // console.log(AllBoxs.length);
+        console.log(i);
+      }
 
 
-  for(i=0; i<KnowledgeBoxCount; i++){
-    AllBoxs[i].Show();
-    
+
+      Protagonist1.Show(); //show the protagonist graphics. 
+      Protagonist1.Movement(); //listen to key pressed event, updates every frame. 
+      // CollitionDetection();
+
+
+      // console.log("case_2");d
+      break;
+
+
+    default:
+      break;
   }
-
-
-  Protagonist1.Show(); //show the protagonist graphics. 
-  Protagonist1.Movement(); //listen to key pressed event, updates every frame. 
-
-  CollitionDetection();
-
-
-  // switch (Scene) {
-  //   case 1:
-  //     print("case_1");
-  //     console.log("case_1");
-  //     break;
-  //   case 2:
-  //     print("case_2");
-  //   default:
-  //     break;
-  // }
   
 }
 
 
+function Portal(x,y,protagonist) {
+// draw the portal
+  push();
+  noFill();
+  stroke("Blue");
+  ellipse(x, y, 30, 60);
+  pop();
+
+// switch scene if protagonist overlaps with portal
+if(dist(x,y,protagonist.x,protagonist.y) < 10){
+  Scene = 2;
+}
+
+}
 
 
+
+// function to detect collition between knowledge boxes and protagonist
+function CollitionDetection(obj1, obj2){
+  // for(i=0; i<KnowledgeBoxCount; i++){
+    // AllBoxs[i].Show();
+    var distance = dist(obj1.x, obj1.y, obj2.x, obj2.y);
+    if(distance < 20){
+      return true;
+    }else{
+      return false;
+    }
+    // console.log(distance);
+  // }
+
+}

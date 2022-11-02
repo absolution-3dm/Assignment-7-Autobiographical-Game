@@ -6,6 +6,7 @@ class Protagonist {
     // this.h = h;
     this.speed = speed;
     this.CollideBox = {w:30, h:30};
+    this.Score = 0;
   }
 
   // draw the geometry of the character
@@ -17,28 +18,28 @@ class Protagonist {
   Movement() {
     if(key === "a" || key ==="A"){
       if(keyIsDown(65)){
-        console.log("key \"A\" Pressed");
+        // console.log("key \"A\" Pressed");
         this.x -= this.speed;
       }
     }
 
     if(key === "d" || key ==="D"){
       if(keyIsDown(68)){
-        console.log("key \"D\" Pressed");
+        // console.log("key \"D\" Pressed");
         this.x += this.speed;
       }
     }
 
     if(key === "s" || key ==="S"){
       if(keyIsDown(83)){
-        console.log("key \"S\" Pressed");
+        // console.log("key \"S\" Pressed");
         this.y += this.speed;
       }
     }
 
     if(key === "w" || key ==="W"){
       if(keyIsDown(87)){
-        console.log("key \"W\" Pressed");
+        // console.log("key \"W\" Pressed");
         this.y -= this.speed;
       }
     }
