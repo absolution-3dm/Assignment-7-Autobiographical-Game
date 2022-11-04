@@ -8,6 +8,9 @@ class KnowledgeBox{
         this.y = y;
         this.isOverlap = false;
         this.ID = ID;
+        this.ScoreValue;
+
+
     }
 
     Show(){
@@ -19,10 +22,11 @@ class KnowledgeBox{
         //draw ID No
         stroke("black");
         fill("black");
-        textSize(30);
+        textSize(20);
         text(this.ID, this.x, this.y)
 
         
         pop();
     }
 }
+

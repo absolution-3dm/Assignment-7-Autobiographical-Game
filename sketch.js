@@ -4,17 +4,13 @@ var Scene = 1; // scene variable to control different scenes
 
 function setup() {
   createCanvas(600, 400);
-  frameRate(30);
+  frameRate(60);
   // setup protagonist object
   Protagonist1 = new Protagonist(width/2,height/2,5);
 
-
   // generate specified amount of knowledge box
   for(i=0; i<KnowledgeBoxCount; i++){
-    // var elements = new KnowledgeBox(random(width),random(height));
-    // AllBoxs.push(elements);
-    AllBoxs[i] = new KnowledgeBox(random(width),random(height), i);
-    
+    AllBoxs[i] = new KnowledgeBox(random(width),random(height), i);  
   }
   // print(AllBoxs);
 
@@ -23,37 +19,32 @@ function setup() {
 function draw() {
   switch (Scene) {
     case 1:
-      console.log("case_1");
-      
+      // console.log("case_1");
       background("pink");
       
       Protagonist1.Show(); //show the protagonist graphics. 
       Protagonist1.Movement(); //listen to key pressed event, updates every frame. 
       
-      Portal(400,100,Protagonist1);
+      Portal(400,100,Protagonist1); //draw the portal
 
       break;
 
     case 2:
-      
       background(200);
 
       //show the knowledgeboxes been created
       for(i=0; i<AllBoxs.length; i++){
         AllBoxs[i].Show();
-        AllBoxs[i].isOverlap = CollitionDetection(AllBoxs[i], Protagonist1);
+        AllBoxs[i].isOverlap = CollitionDetection(AllBoxs[i], Protagonist1); // calculate collision status of two game objects
         
         // if overlap, remove this object
         if(AllBoxs[i].isOverlap){
-          AllBoxs.splice(i, 1);
-          // change the box count
-          // KnowledgeBoxCount --;
-          // console.log(KnowledgeBoxCount);
-          console.log("box NO." + i + " removed");
+          console.log("knowledge box NO." + AllBoxs[i].ID + " collected");
+          AllBoxs.splice(i, 1); // remove the collected box
+          i --; //reduce i to avoid flikering, because after remove the loop index upper limit will -1, which caused skip calculation of the next box
         }
-
         // console.log(AllBoxs.length);
-        console.log(i);
+        // console.log(i);
       }
 
 
@@ -66,7 +57,6 @@ function draw() {
       // console.log("case_2");d
       break;
 
-
     default:
       break;
   }
@@ -75,20 +65,18 @@ function draw() {
 
 
 function Portal(x,y,protagonist) {
-// draw the portal
+  // draw the portal
   push();
   noFill();
   stroke("Blue");
   ellipse(x, y, 30, 60);
   pop();
 
-// switch scene if protagonist overlaps with portal
-if(dist(x,y,protagonist.x,protagonist.y) < 10){
-  Scene = 2;
+  // switch scene if protagonist overlaps with portal
+  if(dist(x,y,protagonist.x,protagonist.y) < 10){
+    Scene = 2;
+  }
 }
-
-}
-
 
 
 // function to detect collition between knowledge boxes and protagonist
