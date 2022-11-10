@@ -12,7 +12,9 @@ class Protagonist {
   // draw the geometry of the character
   Show(){
     rectMode("center");
-    rect(this.x, this.y, 50,50);
+    // image(BoyWalk[3], this.x-20, this.y-40, 80, 80);
+    point(this.x,this.y);
+    rect(this.x, this.y, 50, 50);
   }
 
   Movement() {
