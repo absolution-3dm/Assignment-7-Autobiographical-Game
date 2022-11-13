@@ -1,9 +1,8 @@
 class Protagonist {
-  constructor(x,y,speed) {
+  constructor(x, y, speed) {
     this.x = x;
     this.y = y;
-    // this.w = w;
-    // this.h = h;
+    this.locky;
     this.speed = speed;
     this.CollideBox = {w:30, h:30};
     this.Score = 0;
@@ -11,10 +10,13 @@ class Protagonist {
 
   // draw the geometry of the character
   Show(){
+    push();
     rectMode("center");
-    // image(BoyWalk[3], this.x-20, this.y-40, 80, 80);
-    point(this.x,this.y);
-    rect(this.x, this.y, 50, 50);
+    imageMode(CENTER);
+
+    image(Creature, this.x, this.y, 50, 50);
+
+    pop();
   }
 
   Movement() {
@@ -32,14 +34,14 @@ class Protagonist {
       }
     }
 
-    if(key === "s" || key ==="S"){
+    if((key === "s" || key ==="S") && this.locky === false){
       if(keyIsDown(83)){
         // console.log("key \"S\" Pressed");
         this.y += this.speed;
       }
     }
 
-    if(key === "w" || key ==="W"){
+    if((key === "w" || key ==="W") && this.locky === false){
       if(keyIsDown(87)){
         // console.log("key \"W\" Pressed");
         this.y -= this.speed;
