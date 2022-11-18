@@ -105,6 +105,7 @@ function draw() {
         
         // if overlap, remove(regenerate) this object
         if(AllBoxs[i].isOverlap){
+          // add score according to each knowledge box
           Score += AllBoxs[i].Score;
           console.log("knowledge box NO." + AllBoxs[i].ID + " collected. " + "Score: " + Score); 
           Grid1.ResetGridPoint(AllBoxs[i].GetGridID());
@@ -112,15 +113,9 @@ function draw() {
           var randPoint = Grid1.GetRandomPoint(true);
           AllBoxs[i] = new KBox(0, 0, i, icons);
           AllBoxs[i].SetPosition(randPoint.Position);
-          AllBoxs[i].SetGridID(randPoint.Index);
-
-          // AllBoxs.splice(i, 1); // remove the collected box
-          // i --; //reduce i to avoid flikering, because after remove the loop index upper limit will -1, which caused skip calculation of the next box
-
-          
+          AllBoxs[i].SetGridID(randPoint.Index);          
 
         }
-        
       }
 
       Protagonist1.Show(); //show the protagonist graphics. 

@@ -7,5 +7,4 @@ function CollisionDetection(obj1, obj2) {
     } else {
         return false;
     }
-
 }
