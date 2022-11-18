@@ -12,11 +12,7 @@ class Grid{
 
         this.Positions = [];
         this.Occupied = [];
-
-        // this.Points = this.GridSetup(); //initialize the point list upon creation of the object
         this.GridSetup(); //initialize the point list upon creation of the object
-        
-        
         
     }
     
