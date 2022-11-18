@@ -1,112 +1,83 @@
-
-function SwitchScene0(){
-    // change scene NO.
-    SceneNo = 0;
-
-    
-    //reset things
+/**
+ * setup Scene 0
+ */
+function Scene0Setup(){
 
     //reset protagonist
     Protagonist1.x = 50;
     Protagonist1.y = 370;
-    //reset timer
-    CountDown = 60;
-    //reset score
-    Score = 0;
+    
+
     // replay video
     BGVideo.loop();
 
-    
-    //reset knowledge boxes
-    // generate specified amount of knowledge box
-    for(i=0; i<KnowledgeBoxCount; i++){
-        //rand knowledgebox index
-        var randIndex = floor(random(icons.length));
-        var randScore = Object.values(BoxTypes);
-        var randType = Object.keys(BoxTypes);
-        //create new knowledgeboxes
-        AllBoxs[i] = new KnowledgeBox(random(width),random(height), i, icons[randIndex]);  
+    button1.show();
+    button2.hide();
 
-        // properity assignment
-        AllBoxs[i].Score = randScore[randIndex];
-        AllBoxs[i].Type = randType[randIndex];
-        
-        // print(str(AllBoxs[i].Type) + str(AllBoxs[i].Score));
-    }
-    
-    
 
+    // change scene NO.
+    SceneNo = 0;
 }
 
-function SwitchScene1(){
-    SceneNo = 1;
+
+/**
+ * setup scene 1
+ */
+function Scene1Setup(){
+    
     button1.hide();
     BGVideo.stop();
     Protagonist1.locky = true;//lock y movement
+
+    SceneNo = 1;
 }
 
-function SwitchScene2(){
-    SceneNo = 2;
+
+/**
+ * setup scene 2
+ */
+function Scene2Setup(){
     // scene2 setup
     Protagonist1.locky = false;
+
+    //reset timer
+    CountDown = 60;
+
+    //reset score
+    Score = 0;
+
+    // Generate Grid
+    Grid1 = new Grid(12, 8);
+    
+    // // generate specified amount of knowledge box
+    // for(i=0; i<KnowledgeBoxCount; i++){
+    //     AllBoxs[i] = new KBox(0, 0, i, icons);  
+    // }
+
+    for (var i = 0; i < KnowledgeBoxCount; i ++){
+        
+        var randPoint = Grid1.GetRandomPoint(true);
+        AllBoxs[i] = new KBox(0, 0, i, icons);
+        AllBoxs[i].SetPosition(randPoint.Position);
+        AllBoxs[i].SetGridID(randPoint.Index);
+        
+    }
+
+    SceneNo = 2;
 }
 
-function SwitchScene3(){
+function Scene3Setup(){
+
     SceneNo = 3;
 }
 
 function CountDownTimer(){
     // when game starts, start count down
-    if(SceneNo===2 && CountDown>0){
+    if(SceneNo === 2 && CountDown > 0){
         CountDown --;
     }
-    
 }
 
 setInterval(() => {
     CountDownTimer();
 }, 1000);
-
-function Portal(x,y,protagonist) {
-    // draw the portal
-    push();
-    fill(0,0,0);
-
-    stroke("Cyan");
-    strokeWeight(3);
-    ellipse(x, y, 30, 60);
-    pop();
-
-    // switch scene if protagonist overlaps with portal
-    if(dist(x,y,protagonist.x,protagonist.y) < 10){
-    SwitchScene2();
-    }
-}
-
-// function to detect collition between knowledge boxes and protagonist
-function CollitionDetection(obj1, obj2){
-    var distance = dist(obj1.x, obj1.y, obj2.x, obj2.y);
-    if(distance < 20){
-    return true;
-    }else{
-    return false;
-    }
-
-}
-
-function ScoreUI(x,y){
-    push();
-    rectMode(CORNER);
-    fill(255,255,255,200);
-    noStroke();
-    rect(x,y,60,40);
-
-    fill("black");
-    text("Score=" + Score, x, y+10);
-    text("Time: " + CountDown, x, y+30);
-    pop();
-}
-
-function RandKnowledgeBox(){
-
-}

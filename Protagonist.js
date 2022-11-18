@@ -11,9 +11,10 @@ class Protagonist {
   // draw the geometry of the character
   Show(){
     push();
-    rectMode("center");
-    imageMode(CENTER);
 
+    // rectMode("center");
+    imageMode(CENTER);
+    // rect(this.x, this.y, 50, 50);
     image(Creature, this.x, this.y, 50, 50);
 
     pop();
